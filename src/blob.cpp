@@ -32,7 +32,7 @@ int main()
 //	ServerThread* serverThread = new ServerThread(5000, 2, dataService);
 //	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
 
-//	calibrator->startHsvCalibration(true);
+	calibrator->startHsvCalibration(true);
 //	serverThread->start();
 //	detectorTread->start();
 
