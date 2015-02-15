@@ -9,7 +9,7 @@
 /* ----------------------------------------------------
  * Camera parameters
  ------------------------------------------------------*/
-#define CAM_ID 1
+#define CAM_ID 0
 #define FRAME_WIDTH 1360
 #define FRAME_HEIGHT 768
 
