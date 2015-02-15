@@ -23,27 +23,27 @@ int main()
 	VideoParameters* videoParams = new VideoParameters(CAM_ID, FRAME_WIDTH, FRAME_HEIGHT);
 	ImageParameters* imageParams = new ImageParameters();
 
-	imageParams->setLowerHsv(ORANGE_LOW_H, ORANGE_LOW_S, ORANGE_LOW_V);
-	imageParams->setUpperHsv(ORANGE_UP_H, ORANGE_UP_S, ORANGE_UP_V);
+//	imageParams->setLowerHsv(ORANGE_LOW_H, ORANGE_LOW_S, ORANGE_LOW_V);
+//	imageParams->setUpperHsv(ORANGE_UP_H, ORANGE_UP_S, ORANGE_UP_V);
 
-	BlobDetector* blobDetector = new BlobDetector(videoParams, imageParams, blobsInfoDao);
+//	BlobDetector* blobDetector = new BlobDetector(videoParams, imageParams, blobsInfoDao);
 	ThresholdCalibrator* calibrator = new ThresholdCalibrator(videoParams, imageParams);
 
-	ServerThread* serverThread = new ServerThread(5000, 2, dataService);
-	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
+//	ServerThread* serverThread = new ServerThread(5000, 2, dataService);
+//	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
 
 //	calibrator->startHsvCalibration(true);
-	serverThread->start();
-	detectorTread->start();
+//	serverThread->start();
+//	detectorTread->start();
 
-	serverThread->join();
-	detectorTread->join();
+//	serverThread->join();
+//	detectorTread->join();
 
 	// cleanup
-	delete detectorTread;
-	delete serverThread;
+//	delete detectorTread;
+//	delete serverThread;
 	delete calibrator;
-	delete blobDetector;
+//	delete blobDetector;
 	delete videoParams;
 	delete imageParams;
 	delete dataService;
