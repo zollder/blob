@@ -1,4 +1,6 @@
 
+#include "Mutex.h"
+
 #ifndef blobdata_h
 #define blobdata_h
 
@@ -10,25 +12,29 @@ struct BlobData
 	int colorCode;
 
 	// blob's center coordinates(pixels)
-	double centroidX;
-	double centroidY;
+	float centroidX;
+	float centroidY;
 
 	// blob's offset from the axes
-	double offsetX;
-	double offsetY;
+	float offsetX;
+	float offsetY;
 
 	// dimensions (pixels)
-	double width;
-	double height;
-	double radius;
+	float width;
+	float height;
+	float radius;
 
 	// blob's angle orientation
-	double angle;
+	float angle;
 
 	// blob tracking parameters
 	int lifetime;	// # of frames the blob exists
 	int active;		// # of frames the blob is active from the last inactive period
 	int inactive;	// # of frames the blob was missing
+
+	// read/write protection mechanism
+	Mutex mutex;
 };
+
 
 #endif

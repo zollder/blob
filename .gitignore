@@ -1,0 +1,5 @@
+/Release/
+/language.settings.xml
+*.project
+*.cproject
+*.settings

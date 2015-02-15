@@ -8,6 +8,11 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/sys/subdir.mk
+-include src/data/subdir.mk
+-include src/core/subdir.mk
+-include src/commons/subdir.mk
+-include src/com/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk
@@ -44,7 +49,7 @@ all: blob
 blob: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/usr/local/lib -o "blob" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -std=gnu++11 -L/usr/local/lib -o "blob" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

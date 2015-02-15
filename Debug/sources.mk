@@ -23,5 +23,10 @@ C_UPPER_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+src/sys \
+src/data \
+src/core \
+src/commons \
+src/com \
 src \
 

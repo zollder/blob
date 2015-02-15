@@ -254,8 +254,6 @@
 				printf("FPS = %.2f\n", fps);
 			}
 
-//			cvFlip(targetFrame, targetFrame, 1);
-
 			// copies one array to another with optional scaling and optional type conversion
 			// cvConvert can be used instead (scale=1, shift=0 no prescaling is done)
 			cvConvertScale(sourceFrame, targetFrame, 1, 0);
@@ -333,11 +331,8 @@
             	cvShowImage("Webcam Preview", targetFrame);
 
 			// escape sequence (5ms delay)
-			if (waitKey(5) == 27)
-			{
+			if (waitKey(30) >= 0)
 				quit = true;
-				break;
-			}
 		}
 
 		// cleanup
@@ -374,14 +369,14 @@
 		// for now: 1-red, 2-green, 3-blue, 4-orange
 		blobDataHolder.colorCode = 1;
 
-		blobDataHolder.centroidX = blob_p->centroid.x;
-		blobDataHolder.centroidY = blob_p->centroid.y;
-		blobDataHolder.offsetX = (width/2)-(blob_p->centroid.x);
-		blobDataHolder.offsetY = (height/2)-(blob_p->centroid.y);
-		blobDataHolder.width = blob_p->maxx - blob_p->minx;
-		blobDataHolder.height = blob_p->maxy - blob_p->miny;
-		blobDataHolder.radius = cvDistancePointPoint(blobCentroid, origin);
-		blobDataHolder.angle = cvAngle(blob_p);
+		blobDataHolder.centroidX = (float) blob_p->centroid.x;
+		blobDataHolder.centroidY = (float) blob_p->centroid.y;
+		blobDataHolder.offsetX = (float) (width/2)-(blob_p->centroid.x);
+		blobDataHolder.offsetY = (float) (height/2)-(blob_p->centroid.y);
+		blobDataHolder.width = (float) blob_p->maxx - blob_p->minx;
+		blobDataHolder.height = (float) blob_p->maxy - blob_p->miny;
+		blobDataHolder.radius = (float) cvDistancePointPoint(blobCentroid, origin);
+		blobDataHolder.angle = (float) cvAngle(blob_p);
 
 		return blobDataHolder;
 	}

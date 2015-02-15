@@ -6,19 +6,19 @@
  */
 
 // dependencies (headers)
-#include"VideoParameters.h"
-#include"ImageParameters.h"
-#include "BlobsInfoDao.h"
+#include "../commons/VideoParameters.h"
+#include "../commons/ImageParameters.h"
+#include "../data/BlobsInfoDao.h"
 
 // openCV and cvBlob headers
 #include <cv.h>
 #include <highgui.h>
-#include<opencv2/opencv.hpp>
-#include<cvblob.h>
+#include <opencv2/opencv.hpp>
+#include <cvblob.h>
 
 #include <time.h>
-#include<iostream>
-#include<cmath>
+#include <iostream>
+#include <cmath>
 
 // name spaces
 using namespace cv;

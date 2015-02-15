@@ -1,13 +1,12 @@
-#include"BlobData.h"
 
-#include<cvblob.h>
+#include <cvblob.h>
+#include "BlobData.h"
 
 #ifndef blobsinfodao_h
 #define blobsinfodao_h
 
 using namespace cvb;
 using namespace std;
-
 
 /*
  * BlobsInfoDao class definition.

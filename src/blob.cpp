@@ -2,28 +2,52 @@
 #include <stdio.h>
 
 // dependencies (headers)
-#include"VideoParameters.h"
-#include"ImageParameters.h"
-#include"BlobDetector.h"
+
+#include "commons/Config.h"
+#include "data/BlobDataService.h"
+#include "com/ServerThread.h"
+
+#include "commons/VideoParameters.h"
+#include "commons/ImageParameters.h"
+#include "core/BlobDetector.h"
+#include "core/ThresholdCalibrator.h"
+#include "core/BlobDetectorThread.h"
 
 int main()
 {
-	VideoParameters* videoParams = new VideoParameters(1, 1920, 1080);
-	ImageParameters* imageParams = new ImageParameters();
-	BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
+	printf("\nMain thread started!\n");
 
-	imageParams->setLowerHsv(128, 124, 89);
-	imageParams->setUpperHsv(179, 255, 255);
+	BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
+	BlobDataService* dataService = new BlobDataService(blobsInfoDao);
+
+	VideoParameters* videoParams = new VideoParameters(CAM_ID, FRAME_WIDTH, FRAME_HEIGHT);
+	ImageParameters* imageParams = new ImageParameters();
+
+	imageParams->setLowerHsv(ORANGE_LOW_H, ORANGE_LOW_S, ORANGE_LOW_V);
+	imageParams->setUpperHsv(ORANGE_UP_H, ORANGE_UP_S, ORANGE_UP_V);
 
 	BlobDetector* blobDetector = new BlobDetector(videoParams, imageParams, blobsInfoDao);
-//	blobDetector->startHsvCalibration(false);
-	blobDetector->startHsv(true, true);
+	ThresholdCalibrator* calibrator = new ThresholdCalibrator(videoParams, imageParams);
+
+	ServerThread* serverThread = new ServerThread(5000, 2, dataService);
+	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
+
+//	calibrator->startHsvCalibration(true);
+	serverThread->start();
+	detectorTread->start();
+
+	serverThread->join();
+	detectorTread->join();
 
 	// cleanup
+	delete detectorTread;
+	delete serverThread;
+	delete calibrator;
 	delete blobDetector;
 	delete videoParams;
 	delete imageParams;
+	delete dataService;
 	delete blobsInfoDao;
 
-	printf("\nMain thread done!\n");
+	printf("\nMain thread completed!\n");
 }
