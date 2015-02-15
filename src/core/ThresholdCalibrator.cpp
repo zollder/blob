@@ -14,10 +14,6 @@
 
 		videoParams = video_p;
 		imageParams = image_p;
-
-		rgbRed = CV_RGB(250, 0, 0);
-		rgbGreen = CV_RGB(0, 250, 0);
-		rgbBlue = CV_RGB(0, 0, 250);
 	}
 
 	//-----------------------------------------------------------------------------------------
@@ -31,18 +27,14 @@
 	/**------------------------------------------------------------------------------------
 	 * Starts HSV color space calibrator with the tracker bars for accurate color filtering.
 	 ------------------------------------------------------------------------------------*/
-	int ThresholdCalibrator::startHsvCalibration(bool logsOn)
+	int ThresholdCalibrator::startHsvCalibration()
 	{
 		CvCapture* capture;
 		CvSize imageSize;
 		IplImage *sourceFrame, *targetFrame, *smoothedFrame, *hsvFrame, *segmentedFrame, *labelFrame;
 
-		CvPoint pt1, pt2, pt3, pt4, pt5, pt6;
-		int picWidth, picHeight, thickness;
-
 		CvTracks tracks;
 		CvBlobs blobs;
-		CvBlob* blob;
 
 		cvNamedWindow("Webcam Preview", CV_WINDOW_AUTOSIZE);
 		cvMoveWindow("Webcam Preview", 100, 100);

@@ -12,7 +12,7 @@
 
 // openCV and cvBlob headers
 #include <cv.h>
-#include <highgui.h>
+#include <opencv/highgui.h>
 #include <opencv2/opencv.hpp>
 #include <cvblob.h>
 
@@ -47,9 +47,8 @@ class ThresholdCalibrator
 		/**------------------------------------------------------------------------------------
 		 * Starts blob detection in calibration mode.
 		 * Allows to determine color threshold values with high precision.
-		 * Enables/disables detailed console logs with true/false param value.
 		 ------------------------------------------------------------------------------------*/
-		int startHsvCalibration(bool logsOn);
+		int startHsvCalibration();
 
 	//-----------------------------------------------------------------------------------------
 	// Private members
@@ -59,9 +58,6 @@ class ThresholdCalibrator
 		// object holders
 		VideoParameters* videoParams;
 		ImageParameters* imageParams;
-
-		// pure RGB color holders
-		CvScalar rgbRed, rgbGreen, rgbBlue;
 };
 
 #endif
