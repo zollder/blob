@@ -11,10 +11,10 @@
 // Constructors
 //-----------------------------------------------------------------------------------------
 
-ServerThread::ServerThread(int port, int connections, BlobDataService* dataService)
+ServerThread::ServerThread(SocketServer* server)
 {
 	setThreadId(SOCKET_SERVER_THREAD_ID);
-	server = new SocketServer(port , connections , dataService);
+	socketServer = server;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -22,7 +22,6 @@ ServerThread::ServerThread(int port, int connections, BlobDataService* dataServi
 //-----------------------------------------------------------------------------------------
 ServerThread::~ServerThread()
 {
-	delete server;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -32,8 +31,8 @@ void* ServerThread::run()
 {
 	syslog(LOG_NOTICE,"[KPI::THREAD] START");
 
-	server->start();
-	server->run();
+	socketServer->start();
+	socketServer->run();
 
 	syslog(LOG_NOTICE,"[KPI::THREAD] END");
 
@@ -43,7 +42,7 @@ void* ServerThread::run()
 int ServerThread::stop()
 {
 	syslog(LOG_NOTICE,"[KPI::THREAD] STOP");
-	server->stop();
+	socketServer->stop();
 	return pthread_cancel(getThreadId());
 }
 

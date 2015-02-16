@@ -25,6 +25,9 @@ class SocketServer
 	public:
 
 		/** Constructor. */
+		SocketServer(BlobDataService* service);
+
+		/** Constructor. */
 		SocketServer(int port, int connections, BlobDataService* service);
 
 		/** Destructor. */

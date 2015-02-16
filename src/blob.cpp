@@ -21,33 +21,31 @@ int main()
 	BlobDataService* dataService = new BlobDataService(blobsInfoDao);
 
 	Parameters params;
-	params.setCameraId(1);
+	params.setCameraId(0);
 	params.setLowerHsv(86, 36, 54);
 	params.setUpperHsv(117, 121, 255);
 
-//	AdvBlobDetector* detector = new AdvBlobDetector(params);
-//	detector->startHsv();
-
 	BlobDetector* blobDetector = new BlobDetector(params, blobsInfoDao);
-//	ThresholdCalibrator* calibrator = new ThresholdCalibrator(params);
+	SocketServer* socketServer = new SocketServer(dataService);
 
-//	ServerThread* serverThread = new ServerThread(5000, 2, dataService);
+//	ThresholdCalibrator* calibrator = new ThresholdCalibrator(params);
+//	calibrator->startHsvCalibration();
+
+	ServerThread* serverThread = new ServerThread(socketServer);
 	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
 
-//	blobDetector->startHsv(true, true);
-//	calibrator->startHsvCalibration();
-//	serverThread->start();
+	serverThread->start();
 	detectorTread->start();
 
-//	serverThread->join();
+	serverThread->join();
 	detectorTread->join();
 
 	// cleanup
-	delete detectorTread;
-//	delete serverThread;
 //	delete calibrator;
+	delete detectorTread;
+	delete serverThread;
+	delete socketServer;
 	delete blobDetector;
-//	delete detector;
 	delete dataService;
 	delete blobsInfoDao;
 

@@ -15,7 +15,7 @@ class ServerThread : public BaseThread
 {
 	public:
 
-		ServerThread(int port, int connections, BlobDataService* service);
+		ServerThread(SocketServer* server);
 		~ServerThread();
 
 		void* run();				// overrides BaseThread's run() method
@@ -25,7 +25,7 @@ class ServerThread : public BaseThread
 
 	private:
 
-		SocketServer* server;
+		SocketServer* socketServer;
 
 };
 

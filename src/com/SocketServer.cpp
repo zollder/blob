@@ -4,6 +4,15 @@
  */
 #include "SocketServer.h"
 
+SocketServer::SocketServer(BlobDataService* service)
+{
+	portNumber = PORT;
+	maxUser = CLIENT_NUM;
+	dataService = service;
+
+	logger = new Logger((char*) "Socket Server [KPI]");
+}
+
 SocketServer::SocketServer( int port, int max , BlobDataService* service)
 {
 	portNumber = port;
