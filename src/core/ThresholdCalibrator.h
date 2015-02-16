@@ -6,8 +6,7 @@
  */
 
 // dependencies (headers)
-#include "../commons/VideoParameters.h"
-#include "../commons/ImageParameters.h"
+#include "../commons/Parameters.h"
 #include "../data/BlobsInfoDao.h"
 
 // openCV and cvBlob headers
@@ -39,7 +38,7 @@ class ThresholdCalibrator
 	public:
 
 		// constructor
-		ThresholdCalibrator(VideoParameters *video_p, ImageParameters* image_p);
+		ThresholdCalibrator(Parameters params);
 
 		// destructor
 		~ThresholdCalibrator();
@@ -56,8 +55,7 @@ class ThresholdCalibrator
 	private:
 
 		// object holders
-		VideoParameters* videoParams;
-		ImageParameters* imageParams;
+		Parameters config;
 };
 
 #endif

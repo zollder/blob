@@ -8,12 +8,10 @@
 	//-----------------------------------------------------------------------------------------
 	// Constructor
 	//-----------------------------------------------------------------------------------------
-	ThresholdCalibrator::ThresholdCalibrator(VideoParameters *video_p, ImageParameters* image_p)
+	ThresholdCalibrator::ThresholdCalibrator(Parameters params)
 	{
 		printf("\nConstructing ThresholdCalibrator ...");
-
-		videoParams = video_p;
-		imageParams = image_p;
+		config = params;
 	}
 
 	//-----------------------------------------------------------------------------------------
@@ -39,9 +37,9 @@
 		cvNamedWindow("Webcam Preview", CV_WINDOW_AUTOSIZE);
 		cvMoveWindow("Webcam Preview", 100, 100);
 
-	    capture = cvCaptureFromCAM(videoParams->cameraId);
-	    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, videoParams->captureWidth);
-	    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, videoParams->captureHeight);
+	    capture = cvCaptureFromCAM(config.camId);
+	    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, config.frameWidth);
+	    cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, config.frameHeight);
 
 	    sourceFrame = cvRetrieveFrame(capture);
 	    if (sourceFrame == NULL) {
@@ -109,7 +107,6 @@
 			// escape sequence
 			if (waitKey(10) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 				break;
-
 		}
 
 		// cleanup

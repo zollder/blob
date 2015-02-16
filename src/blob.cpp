@@ -7,8 +7,7 @@
 #include "data/BlobDataService.h"
 #include "com/ServerThread.h"
 
-#include "commons/VideoParameters.h"
-#include "commons/ImageParameters.h"
+#include "commons/Parameters.h"
 #include "core/BlobDetector.h"
 #include "core/ThresholdCalibrator.h"
 #include "core/BlobDetectorThread.h"
@@ -18,41 +17,39 @@ int main()
 {
 	printf("\nMain thread started!\n");
 
-//	BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
-//	BlobDataService* dataService = new BlobDataService(blobsInfoDao);
+	BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
+	BlobDataService* dataService = new BlobDataService(blobsInfoDao);
 
-	VideoParameters* videoParams = new VideoParameters(CAM_ID, FRAME_WIDTH, FRAME_HEIGHT);
-	ImageParameters* imageParams = new ImageParameters();
+	Parameters params;
+	params.setCameraId(1);
+	params.setLowerHsv(86, 36, 54);
+	params.setUpperHsv(117, 121, 255);
 
-	AdvBlobDetector* detector = new AdvBlobDetector(videoParams, imageParams);
-	detector->startHsv();
+//	AdvBlobDetector* detector = new AdvBlobDetector(params);
+//	detector->startHsv();
 
-//	imageParams->setLowerHsv(ORANGE_LOW_H, ORANGE_LOW_S, ORANGE_LOW_V);
-//	imageParams->setUpperHsv(ORANGE_UP_H, ORANGE_UP_S, ORANGE_UP_V);
-
-//	BlobDetector* blobDetector = new BlobDetector(videoParams, imageParams, blobsInfoDao);
-//	ThresholdCalibrator* calibrator = new ThresholdCalibrator(videoParams, imageParams);
+	BlobDetector* blobDetector = new BlobDetector(params, blobsInfoDao);
+//	ThresholdCalibrator* calibrator = new ThresholdCalibrator(params);
 
 //	ServerThread* serverThread = new ServerThread(5000, 2, dataService);
-//	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
+	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
 
+//	blobDetector->startHsv(true, true);
 //	calibrator->startHsvCalibration();
 //	serverThread->start();
-//	detectorTread->start();
+	detectorTread->start();
 
 //	serverThread->join();
-//	detectorTread->join();
+	detectorTread->join();
 
 	// cleanup
-//	delete detectorTread;
+	delete detectorTread;
 //	delete serverThread;
 //	delete calibrator;
-//	delete blobDetector;
-	delete videoParams;
-	delete imageParams;
-	delete detector;
-//	delete dataService;
-//	delete blobsInfoDao;
+	delete blobDetector;
+//	delete detector;
+	delete dataService;
+	delete blobsInfoDao;
 
 	printf("\nMain thread completed!\n");
 }

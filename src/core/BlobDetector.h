@@ -6,8 +6,7 @@
  */
 
 // dependencies (headers)
-#include "../commons/VideoParameters.h"
-#include "../commons/ImageParameters.h"
+#include "../commons/Parameters.h"
 #include "../data/BlobsInfoDao.h"
 
 // openCV and cvBlob headers
@@ -39,7 +38,7 @@ class BlobDetector
 	public:
 
 		// constructor
-		BlobDetector(VideoParameters *video_p, ImageParameters* image_p, BlobsInfoDao* blobsInfo_p);
+		BlobDetector(Parameters params, BlobsInfoDao* blobsInfo_p);
 
 		// destructor
 		~BlobDetector();
@@ -50,21 +49,13 @@ class BlobDetector
 		 ------------------------------------------------------------------------------------*/
 		int startHsv(bool videoOn, bool fpsOn);
 
-		/**------------------------------------------------------------------------------------
-		 * Starts blob detection in calibration mode.
-		 * Allows to determine color threshold values with high precision.
-		 * Enables/disables detailed console logs with true/false param value.
-		 ------------------------------------------------------------------------------------*/
-		int startHsvCalibration(bool logsOn);
-
 	//-----------------------------------------------------------------------------------------
 	// Private members
 	//-----------------------------------------------------------------------------------------
 	private:
 
 		// object holders
-		VideoParameters* videoParams;
-		ImageParameters* imageParams;
+		Parameters config;
 		BlobsInfoDao* blobsInfo;
 
 		// pure RGB color holders

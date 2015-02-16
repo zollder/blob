@@ -11,12 +11,10 @@
 	//-----------------------------------------------------------------------------------------
 	// Constructor
 	//-----------------------------------------------------------------------------------------
-	AdvBlobDetector::AdvBlobDetector(VideoParameters *video_p, ImageParameters* image_p)
+	AdvBlobDetector::AdvBlobDetector(Parameters params)
 	{
 		printf("\nConstructing AdvBlobDetector ...");
-
-		videoParams = video_p;
-		imageParams = image_p;
+		config = params;
 	}
 
 	//-----------------------------------------------------------------------------------------
@@ -32,12 +30,12 @@
 	 ------------------------------------------------------------------------------------*/
 	int AdvBlobDetector::startHsv()
 	{
-	    VideoCapture videoCap(videoParams->cameraId);
+	    VideoCapture videoCap(config.camId);
 	    if (!videoCap.isOpened())
 	    	return -1;
 
-	    videoCap.set(CV_CAP_PROP_FRAME_WIDTH, videoParams->captureWidth);
-	    videoCap.set(CV_CAP_PROP_FRAME_HEIGHT, videoParams->captureHeight);
+	    videoCap.set(CV_CAP_PROP_FRAME_WIDTH, config.frameWidth);
+	    videoCap.set(CV_CAP_PROP_FRAME_HEIGHT, config.frameHeight);
 
 	    Mat edges;
 	    namedWindow("edges1", 1);

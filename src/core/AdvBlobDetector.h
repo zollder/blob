@@ -6,11 +6,6 @@
  *  Inspired by: https://code.google.com/p/my-masters-thesis/source/browse/trunk/MastersThesis/Sample/SimpleBlobDetecter_demo.cpp?r=66
  */
 
-// dependencies (headers)
-#include "../commons/VideoParameters.h"
-#include "../commons/ImageParameters.h"
-#include "../data/BlobsInfoDao.h"
-
 // openCV and cvBlob headers
 #include <opencv2/highgui.hpp>
 #include <opencv2/opencv.hpp>
@@ -19,6 +14,10 @@
 #include <time.h>
 #include <iostream>
 #include <cmath>
+
+// dependencies (headers)
+#include "../commons/Parameters.h"
+#include "../data/BlobsInfoDao.h"
 
 // name spaces
 using namespace cv;
@@ -39,7 +38,7 @@ class AdvBlobDetector
 	public:
 
 		// constructor
-		AdvBlobDetector(VideoParameters *video_p, ImageParameters* image_p);
+		AdvBlobDetector(Parameters params);
 
 		// destructor
 		~AdvBlobDetector();
@@ -54,10 +53,8 @@ class AdvBlobDetector
 	// Private members
 	//-----------------------------------------------------------------------------------------
 	private:
+		Parameters config;
 
-		// object holders
-		VideoParameters* videoParams;
-		ImageParameters* imageParams;
 };
 
 #endif
