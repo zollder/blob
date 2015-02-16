@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/core/AdvBlobDetector.cpp \
 ../src/core/BlobDetector.cpp \
 ../src/core/ThresholdCalibrator.cpp 
 
@@ -11,6 +12,7 @@ CC_SRCS += \
 ../src/core/BlobDetectorThread.cc 
 
 OBJS += \
+./src/core/AdvBlobDetector.o \
 ./src/core/BlobDetector.o \
 ./src/core/BlobDetectorThread.o \
 ./src/core/ThresholdCalibrator.o 
@@ -19,6 +21,7 @@ CC_DEPS += \
 ./src/core/BlobDetectorThread.d 
 
 CPP_DEPS += \
+./src/core/AdvBlobDetector.d \
 ./src/core/BlobDetector.d \
 ./src/core/ThresholdCalibrator.d 
 
