@@ -2,8 +2,6 @@
 #include <stdio.h>
 
 // dependencies (headers)
-
-#include "commons/Config.h"
 #include "data/BlobDataService.h"
 #include "com/ServerThread.h"
 
@@ -15,9 +13,9 @@
 
 int main()
 {
-	printf("\nMain thread started!\n");
+    syslog(LOG_NOTICE,"[KPI::MAIN] START");
 
-	BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
+    BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
 	BlobDataService* dataService = new BlobDataService(blobsInfoDao);
 
 	Parameters params;
@@ -26,7 +24,7 @@ int main()
 	params.setUpperHsv(117, 121, 255);
 
 	BlobDetector* blobDetector = new BlobDetector(params, blobsInfoDao);
-	SocketServer* socketServer = new SocketServer(dataService);
+	SocketServer* socketServer = new SocketServer(SERVER_PORT, SERVER_CLIENTS, dataService);
 
 //	ThresholdCalibrator* calibrator = new ThresholdCalibrator(params);
 //	calibrator->startHsvCalibration();

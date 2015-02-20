@@ -10,18 +10,22 @@
 //-----------------------------------------------------------------------------------------
 // Constructors
 //-----------------------------------------------------------------------------------------
-
 ServerThread::ServerThread(SocketServer* server)
 {
-	setThreadId(SOCKET_SERVER_THREAD_ID);
+	setThreadId( SERVER_THREAD_ID );
 	socketServer = server;
 }
-
 //-----------------------------------------------------------------------------------------
 // Destructor
 //-----------------------------------------------------------------------------------------
 ServerThread::~ServerThread()
 {
+	if( stop() != 0 )
+	{
+		syslog(LOG_NOTICE,"[KPI::CLIENT THREAD] failed stop");
+		kill();
+	}
+
 }
 
 //-----------------------------------------------------------------------------------------
@@ -42,7 +46,6 @@ void* ServerThread::run()
 int ServerThread::stop()
 {
 	syslog(LOG_NOTICE,"[KPI::THREAD] STOP");
-	socketServer->stop();
 	return pthread_cancel(getThreadId());
 }
 
