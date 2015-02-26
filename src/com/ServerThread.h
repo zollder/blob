@@ -17,7 +17,7 @@ class ServerThread: public BaseThread
 
 public:
 
-	ServerThread(SocketServer* server);
+	ServerThread(SocketServer* server, int threadId);
 	~ServerThread();
 	void* run();				// overrides BaseThread's run() method
 

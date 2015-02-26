@@ -26,7 +26,7 @@ class BlobDetectorThread : public BaseThread
 	public:
 
 		// constructor
-		BlobDetectorThread(BlobDetector* detector);
+		BlobDetectorThread(BlobDetector* detector, int threadId);
 
 		// destructor
 		~BlobDetectorThread();

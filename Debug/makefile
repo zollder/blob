@@ -52,13 +52,18 @@ blob: $(OBJS) $(USER_OBJS)
 	g++ -std=gnu++11 -L/usr/local/lib -o "blob" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
+	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
 	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) blob
 	-@echo ' '
 
+post-build:
+	-scp -r /home/zollder/beagle/eclipse-ws-opencv/blob/Debug/blob root@192.168.0.12:/odroid/ws/blob
+	-@echo ' '
+
 .PHONY: all clean dependents
-.SECONDARY:
+.SECONDARY: post-build
 
 -include ../makefile.targets

@@ -3,6 +3,7 @@
 
 // dependencies (headers)
 #include "data/BlobDataService.h"
+#include "com/SocketServer.h"
 #include "com/ServerThread.h"
 
 #include "commons/Parameters.h"
@@ -17,6 +18,7 @@ int main()
 
     BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
 	BlobDataService* dataService = new BlobDataService(blobsInfoDao);
+	SocketServer* socketServer = new SocketServer(PORT, CONNECTIONS, dataService);
 
 	Parameters params;
 	params.setCameraId(0);
@@ -24,13 +26,12 @@ int main()
 	params.setUpperHsv(117, 121, 255);
 
 	BlobDetector* blobDetector = new BlobDetector(params, blobsInfoDao);
-	SocketServer* socketServer = new SocketServer(SERVER_PORT, SERVER_CLIENTS, dataService);
 
 //	ThresholdCalibrator* calibrator = new ThresholdCalibrator(params);
 //	calibrator->startHsvCalibration();
 
-	ServerThread* serverThread = new ServerThread(socketServer);
-	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector);
+	ServerThread* serverThread = new ServerThread(socketServer, SOCKET_SERVER_THREAD_ID);
+	BlobDetectorThread* detectorTread = new BlobDetectorThread(blobDetector, OBJECT_DETECTOR_THREAD_ID);
 
 	serverThread->start();
 	detectorTread->start();

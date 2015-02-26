@@ -13,11 +13,11 @@
 	//-----------------------------------------------------------------------------------------
 	// Constructor
 	//-----------------------------------------------------------------------------------------
-	BlobDetectorThread::BlobDetectorThread(BlobDetector* detector)
+	BlobDetectorThread::BlobDetectorThread(BlobDetector* detector, int threadId)
 	{
 		printf("Constructing BlobDetectorThread ...\n");
 
-		setThreadId(OBJECT_DETECTOR_THREAD_ID);
+		setThreadId(threadId);
 		timer = new FdTimer(getThreadId(), OBJECT_DETECTOR_INTERVAL);
 		this->blobDetector = detector;
 	}
