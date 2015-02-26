@@ -60,7 +60,7 @@ clean:
 	-@echo ' '
 
 post-build:
-	-scp -r /home/zollder/beagle/eclipse-ws-opencv/blob/Debug/blob root@192.168.0.12:/odroid/ws/blob
+	-scp -r /home/zollder/beagle/eclipse-ws-opencv/blob odroid@192.168.0.12:/home/odroid/ws
 	-@echo ' '
 
 .PHONY: all clean dependents

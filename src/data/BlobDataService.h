@@ -14,7 +14,6 @@
 //-----------------------------------------------------------------------------------------
 class BlobDataService
 {
-
 	//-----------------------------------------------------------------------------------------
 	// Public members
 	//-----------------------------------------------------------------------------------------
@@ -30,7 +29,8 @@ class BlobDataService
 		float* getData()
 		{
 			// copy blob data into array
-			copyBlobData();
+			this->copyBlobData();
+
 			return dataHolder;
 		}
 
@@ -46,22 +46,38 @@ class BlobDataService
 
 		/** Retrieves data for a largest blob from the list of discovered blobs.
 		 *  Copies blob data into the array of floats. */
+//		void copyBlobData()
+//		{
+//			if (blobsDao->getBlobsInfo()->size() > 0)
+//			{
+//				BlobData blobData = blobsDao->getBlobsInfo()->front();
+//				blobData.mutex.lock();
+//					dataHolder[0] = (float) blobData.blobId;
+//					dataHolder[1] = (float) blobData.colorCode;
+//					dataHolder[2] = blobData.offsetX;
+//					dataHolder[3] = blobData.offsetY;
+//					dataHolder[4] = blobData.radius;
+//					dataHolder[5] = blobData.width;
+//					dataHolder[6] = blobData.height;
+//					dataHolder[7] = blobData.angle;
+//				blobData.mutex.unlock();
+//			}
+//		}
+
 		void copyBlobData()
 		{
-			if (blobsDao->getBlobsInfo()->size() > 0)
-			{
-				BlobData blobData = blobsDao->getBlobsInfo()->front();
-				blobData.mutex.lock();
-					dataHolder[0] = (float) blobData.blobId;
-					dataHolder[1] = (float) blobData.colorCode;
-					dataHolder[2] = blobData.offsetX;
-					dataHolder[3] = blobData.offsetY;
-					dataHolder[4] = blobData.radius;
-					dataHolder[5] = blobData.width;
-					dataHolder[6] = blobData.height;
-					dataHolder[7] = blobData.angle;
-				blobData.mutex.unlock();
-			}
+			BlobData blobData = blobsDao->getLargestBlob();
+			blobData.mutex.lock();
+				dataHolder[0] = 1;
+				dataHolder[1] = (float) blobData.blobId;
+				dataHolder[2] = (float) blobData.colorCode;
+				dataHolder[3] = blobData.offsetX;
+				dataHolder[4] = blobData.offsetY;
+				dataHolder[5] = blobData.radius;
+				dataHolder[6] = blobData.width;
+				dataHolder[7] = blobData.height;
+				dataHolder[8] = blobData.angle;
+			blobData.mutex.unlock();
 		}
 };
 
