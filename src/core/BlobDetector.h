@@ -7,7 +7,7 @@
 
 // dependencies (headers)
 #include "../commons/Parameters.h"
-#include "../data/BlobsInfoDao.h"
+#include "../data/BlobDataService.h"
 
 // openCV and cvBlob headers
 #include <cv.h>
@@ -38,7 +38,7 @@ class BlobDetector
 	public:
 
 		// constructor
-		BlobDetector(Parameters params, BlobsInfoDao* blobsInfo_p);
+		BlobDetector(Parameters params, BlobDataService* service);
 
 		// destructor
 		~BlobDetector();
@@ -56,7 +56,7 @@ class BlobDetector
 
 		// object holders
 		Parameters config;
-		BlobsInfoDao* blobsInfo;
+		BlobDataService* dataService;
 
 		// pure RGB color holders
 		CvScalar rgbRed, rgbGreen, rgbBlue;

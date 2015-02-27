@@ -36,15 +36,8 @@
 	//-----------------------------------------------------------------------------------------
 	void* BlobDetectorThread::run()
 	{
-//		bool quit = false;
-//		while(!quit)
-//		{
-			//	blobDetector->startHsvCalibration(false);
-			blobDetector->startHsv(true, true);
-//
-//	    	if (waitKey(30) >= 0)
-//	    		quit = true;
-//		}
+		//	blobDetector->startHsvCalibration(false);
+		blobDetector->startHsv(true, true);
 
 		return NULL;
 	}

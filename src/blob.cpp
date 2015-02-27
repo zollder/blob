@@ -10,22 +10,22 @@
 #include "core/BlobDetector.h"
 #include "core/ThresholdCalibrator.h"
 #include "core/BlobDetectorThread.h"
-#include "core/AdvBlobDetector.h"
 
 int main()
 {
     syslog(LOG_NOTICE,"[KPI::MAIN] START");
 
-    BlobsInfoDao* blobsInfoDao = new BlobsInfoDao();
-	BlobDataService* dataService = new BlobDataService(blobsInfoDao);
+    BlobData* blobData = new BlobData();
+	BlobDataService* dataService = new BlobDataService(blobData);
 	SocketServer* socketServer = new SocketServer(PORT, CONNECTIONS, dataService);
 
 	Parameters params;
 	params.setCameraId(0);
-	params.setLowerHsv(86, 36, 54);
-	params.setUpperHsv(117, 121, 255);
+	params.setFrameSize(720, 480);
+	params.setLowerHsv(90, 36, 131);
+	params.setUpperHsv(116, 255, 255);
 
-	BlobDetector* blobDetector = new BlobDetector(params, blobsInfoDao);
+	BlobDetector* blobDetector = new BlobDetector(params, dataService);
 
 //	ThresholdCalibrator* calibrator = new ThresholdCalibrator(params);
 //	calibrator->startHsvCalibration();
@@ -46,7 +46,7 @@ int main()
 	delete socketServer;
 	delete blobDetector;
 	delete dataService;
-	delete blobsInfoDao;
+	delete blobData;
 
 	printf("\nMain thread completed!\n");
 }

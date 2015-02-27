@@ -19,12 +19,12 @@ class Parameters
 		int frameHeight = 720;
 
 		/*  HSV color-space default threshold values */
-		int lowerH = 100;
-		int lowerS = 153;
-		int lowerV = 214;
+		int lowerH = 86;
+		int lowerS = 121;
+		int lowerV = 131;
 
-		int upperH = 124;
-		int upperS = 255;
+		int upperH = 117;
+		int upperS = 200;
 		int upperV = 255;
 
 		// sets camera ID

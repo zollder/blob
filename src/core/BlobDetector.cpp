@@ -8,11 +8,11 @@
 	//-----------------------------------------------------------------------------------------
 	// Constructor
 	//-----------------------------------------------------------------------------------------
-	BlobDetector::BlobDetector(Parameters params, BlobsInfoDao* blobsInfo_p)
+	BlobDetector::BlobDetector(Parameters params, BlobDataService* service)
 	{
 		printf("\nConstructing BlobDetector ...");
 		config = params;
-		blobsInfo = blobsInfo_p;
+		dataService = service;
 
 		rgbRed = CV_RGB(250, 0, 0);
 		rgbGreen = CV_RGB(0, 250, 0);
@@ -167,16 +167,28 @@
 	            cvLine(targetFrame, pt5, pt6, rgbGreen, thickness);
 	            cvCircle(targetFrame, pt6, 3, rgbGreen, 2, CV_FILLED, 0);
 
-	            BlobData blobData = packageBlobData(blob, picWidth, picHeight);
-	            this->blobsInfo->setLargestBlob(blobData);
+	            BlobData tempBlobData = packageBlobData(blob, picWidth, picHeight);
+
+	            dataService->blobData->mutex.lock();
+					dataService->blobData->blobId = tempBlobData.blobId;
+					dataService->blobData->colorCode = tempBlobData.colorCode;
+					dataService->blobData->centroidX = tempBlobData.centroidX;
+					dataService->blobData->centroidY = tempBlobData.centroidY;
+					dataService->blobData->offsetX = tempBlobData.offsetX;
+					dataService->blobData->offsetY = tempBlobData.offsetY;
+					dataService->blobData->width = tempBlobData.width;
+					dataService->blobData->height = tempBlobData.height;
+					dataService->blobData->radius = tempBlobData.radius;
+					dataService->blobData->angle = tempBlobData.angle;
+				dataService->blobData->mutex.unlock();
 
 	            printf("\nBlobs found: %lu", blobs.size());
-	            printf("\ncenter-x: %.2f center-y: %.2f", blobData.centroidX, blobData.centroidY);
-	            printf("\noffset-x: %.2f offset-y: %.2f", blobData.offsetX, blobData.offsetY);
-	            printf("\nradius: %.2f", blobData.radius);
-	            printf("\nwidth: %.2f", blobData.width);
-	            printf("\nheight: %.2f", blobData.height);
-	            printf("\nBLOB LABEL: %d", blobData.blobId);
+	            printf("\ncenter-x: %.2f center-y: %.2f", tempBlobData.centroidX, tempBlobData.centroidY);
+	            printf("\noffset-x: %.2f offset-y: %.2f", tempBlobData.offsetX, tempBlobData.offsetY);
+	            printf("\nradius: %.2f", tempBlobData.radius);
+	            printf("\nwidth: %.2f", tempBlobData.width);
+	            printf("\nheight: %.2f", tempBlobData.height);
+	            printf("\nBLOB LABEL: %d", tempBlobData.blobId);
 	        }
 
             if (videoOn)
@@ -228,7 +240,7 @@
 		blobDataHolder.width = (float) blob_p->maxx - blob_p->minx;
 		blobDataHolder.height = (float) blob_p->maxy - blob_p->miny;
 		blobDataHolder.radius = (float) cvDistancePointPoint(blobCentroid, origin);
-		blobDataHolder.angle = (float) cvAngle(blob_p);
+		blobDataHolder.angle = (float) cvAngle(blob_p) * 57.2957795;
 
 		return blobDataHolder;
 	}
